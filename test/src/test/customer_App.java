@@ -82,23 +82,26 @@ public class customer_App {
         Customer customer = new Customer();
 
         frame = new JFrame();
-        frame.setSize(1000,1000);
+        frame.setSize(803,538);
         frame.getContentPane().setLayout(null);
         String[][] data = customer.getCustomers();
         String[] headers = new String[] {"Name", "Author", "BookNumber", "Publisher", "Category", "Introduction"};
 
-        
-        ImagePanel ListPanel = new ImagePanel(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/login.jpg").getImage());
-        ListPanel.setBounds(0, 0, 787, 476);
+        JPanel ListPanel = new JPanel(); // 이미재 패널 대신 추가
+ 
+        //ImagePanel ListPanel = new ImagePanel(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg").getImage());
+        ListPanel.setBounds(0, 0, 2000, 2000);
         ListPanel.setVisible(false);
+        
+        JPanel mainPanel = new JPanel();
         ImagePanel LoginPanel = new ImagePanel(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg").getImage()); 
-        ImagePanel mainPanel = new ImagePanel(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg").getImage());
+        //ImagePanel mainPanel = new ImagePanel(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg").getImage());
         JPanel joinPanel = new JPanel();
         joinPanel.setVisible(false);
         //패널을 이동하여 window builder에서 수정시 자꾸 오류가 발생하여 Panel만 위로 뺏다.
 
         //Label setting
-        joinPanel.setBounds(0, 0, 787, 476);
+        joinPanel.setBounds(0, 0, 786, 476);
         frame.getContentPane().add(joinPanel);
         joinPanel.setLayout(null);
 
@@ -315,7 +318,7 @@ public class customer_App {
         mainPanel.add(introduction);
 
         //추가하기 버튼을 누르면 dB로 데이터 전송
-        JButton Submitbtn = new JButton("\uC800\uC7A5");
+        JButton Submitbtn = new JButton("저장");
         Submitbtn.addActionListener(new ActionListener() { //버튼을 누르면 입력된 string값을 받음 이후 DB로 전송
             public void actionPerformed(ActionEvent e) {
                 String nameTxt = name.getText();
@@ -335,7 +338,7 @@ public class customer_App {
         mainPanel.add(Submitbtn);
 
         //List btn
-        JButton listbtn = new JButton("");
+        JButton listbtn = new JButton("List");
         listbtn.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         listbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -347,7 +350,7 @@ public class customer_App {
         });
 
 
-        listbtn.setIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg"));
+        //listbtn.setIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg"));
         listbtn.setBounds(42, 31, 152, 62);
         mainPanel.add(listbtn);
         ListPanel.setLayout(null);
@@ -373,7 +376,7 @@ public class customer_App {
         //addministrator btn    
         //현재 로그인되어 있는 ID가 뭐지 확인하기 
         //로그인되어 있는 ID가 root이면 administrator
-        JButton addbtn = new JButton("");
+        JButton addbtn = new JButton("Administrator");
         addbtn.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         addbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -383,7 +386,7 @@ public class customer_App {
             }
         });
 
-        addbtn.setIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg"));
+        // addbtn.setIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg"));
         addbtn.setBounds(35, 141, 172, 63);
         ListPanel.add(addbtn);
 
@@ -421,10 +424,11 @@ public class customer_App {
 
 
         //login btn
-        JButton btnLogin = new JButton("");
-        btnLogin.setIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/login.jpg"));
-        btnLogin.setPressedIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg"));
+        JButton btnLogin = new JButton("Login");
+        //btnLogin.setIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/login.jpg"));
+        //btnLogin.setPressedIcon(new ImageIcon("C://Users//tjxog//OneDrive//사진//Saved Pictures/image.jpg"));
 
+        
         //버튼이 눌러지면 색깔이 바뀐다
         //실질적인 기능 구현
         btnLogin.addActionListener(new ActionListener() {
@@ -439,18 +443,19 @@ public class customer_App {
                         JOptionPane.showMessageDialog(null, "You success logd in");
                         mainPanel.setVisible(false);
                         ListPanel.setVisible(true);
+                        btnLogin.setVisible(false);
                     }
                 }
 
                 //초기 CSV에서 파일을 읽어와서 구현하기전, 아이디를 설정해서 로그인ID와 
-                    if(id.getText().equals("root")&&Arrays.equals(pw.getPassword(),"root".toCharArray())) { //id는 string값 이므로 equal로 비교
+ /*                   if(id.getText().equals("root") && Arrays.equals(pw.getPassword(),"root".toCharArray())) { //id는 string값 이므로 equal로 비교
                     System.out.println("관리자님 반갑습니다.");
                     mainPanel.setVisible(false);
                     ListPanel.setVisible(true);
                     } else {
                     JOptionPane.showMessageDialog(null, "You failed to logd in");
-                    }
-            }
+                    } */
+          }
         });
 
         btnLogin.setFont(new Font("굴림", Font.PLAIN, 16));
@@ -489,7 +494,24 @@ public class customer_App {
         JMenuBar bar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenu aboutMenu = new JMenu("About");
+        
+        JMenuItem openfile = new JMenuItem("Open");
+        JMenuItem exit = new JMenuItem("Exit");
+        
+        fileMenu.add(openfile);
+        fileMenu.add(exit);
+        
+        bar.add(fileMenu);
+        bar.add(aboutMenu);
+        
+        /*
+        fileMenu.add(new JMenuItem("Open"));
+        fileMenu.addSeparator();
+        fileMenu.add(new JMenuItem("Exit"));
+        */
 
+        
+        /*
         bar.add(fileMenu);
         bar.add(aboutMenu);
 
@@ -498,7 +520,8 @@ public class customer_App {
         fileMenu.add(openFile);
         fileMenu.addSeparator();
         fileMenu.add(exit);
-
+*/
+        
         exit.addActionListener(new ActionListener(){
 
             public void actionPerformed(ActionEvent e) {
@@ -508,5 +531,6 @@ public class customer_App {
         });
 
         return bar;
+        
     }
 }
